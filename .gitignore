@@ -23,3 +23,4 @@ pnpm-debug.log*
 # AWS/CDK
 .cdk.staging
 cdk.out
+infrastructure/outputs.json

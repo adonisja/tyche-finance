@@ -1,8 +1,0 @@
-{
-  "TycheStack": {
-    "UserPoolClientId": "49993ps4165cjqu161528up854",
-    "UserPoolId": "us-east-1_khi9CtS4e",
-    "ApiUrl": "https://841dg6itk5.execute-api.us-east-1.amazonaws.com/",
-    "UploadsBucketName": "tyche-uploads-586794453404"
-  }
-}
