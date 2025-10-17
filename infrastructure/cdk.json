@@ -1,0 +1,9 @@
+{
+  "app": "node dist/app.js",
+  "requireApproval": "never",
+  "context": {
+    "@aws-cdk/core:newStyleStackSynthesis": true,
+    "@aws-cdk/aws-lambda:recognizeLayerVersion": true,
+    "@aws-cdk/core:stackRelativeExports": true
+  }
+}

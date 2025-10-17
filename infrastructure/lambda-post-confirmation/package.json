@@ -1,0 +1,9 @@
+{
+  "name": "tyche-post-confirmation-lambda",
+  "version": "1.0.0",
+  "description": "Post-confirmation Lambda for Cognito to auto-assign users to groups",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.675.0"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@tyche/api",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "npm run build:bundle",
+    "build:bundle": "esbuild src/index.ts --bundle --platform=node --target=node20 --external:@aws-sdk/* --outfile=dist/index.js",
+    "typecheck": "tsc -b --pretty"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.650.0",
+    "@aws-sdk/lib-dynamodb": "^3.650.0",
+    "@tyche/ai": "*",
+    "@tyche/core": "*",
+    "@tyche/types": "*",
+    "@types/aws-lambda": "^8.10.136"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.11",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3"
+  }
+}
