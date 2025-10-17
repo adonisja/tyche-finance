@@ -145,7 +145,7 @@ npm run test:e2e
 5. Open a Pull Request
 ---
 ## 📄 License
-MIT License - see LICENSE file for details
+This project is licensed for personal, educational, and non-commercial use only. See LICENSE file for details and commercial licensing inquiries.
 ---
 **Built with ❤️ for better financial health**
 # Tyche Finance
@@ -505,6 +505,7 @@ Three user roles with escalating permissions:
 | **User** | Manage own cards, transactions, chat with AI |
 | **Dev** | View system metrics, test AI models, access anonymized data |
 | **Admin** | View all users, manage roles, access audit logs, impersonate users |
+| **Admin** | View all users, manage roles, access audit logs, perform advanced troubleshooting and support |
 
 ### Data Isolation
 
