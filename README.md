@@ -1,4 +1,154 @@
 # Tyche Finance
+> AI-powered personal finance app for budget management and credit card debt payoff.
+**Status:** ✅ Deployed (Backend + Frontend Budget/Spending Features Complete)
+**Version:** 0.5.0 (Budget & Spending Dashboard UI)
+**Last Updated:** October 17, 2025
+---
+## 🌟 Overview
+Tyche Finance is a cross-platform, AI-powered personal finance application that helps users:
+- Optimize credit card debt payoff (avalanche, snowball strategies)
+- Analyze spending habits with AI classification
+- Get personalized financial advice from multiple AI models
+- Access via web or mobile (React Native)
+- Import data from CSV, PDF, or camera-scanned receipts
+---
+## ✨ Key Features
+### Authentication & Security
+- AWS Cognito authentication (email verification)
+- Role-based access control (Admins, DevTeam, Users)
+- JWT tokens for secure API authorization
+- Amazon SES for email delivery
+### Budget Setup Page
+- Income and Expenses side-by-side
+- Income breakdown: salary, bonuses, side income, investments, other
+- Expense allocation: 20 categories with progress bars
+- D3.js pie chart visualization
+- Budget locked to current month (no selector)
+- 24-hour edit window, then budget is locked
+- Upload buttons for income and expense
+- Real-time calculations: discretionary income, allocation percentages
+- API integration for save/load
+- Responsive design
+### Spending Dashboard
+- Monthly overview: income, spent, budgeted, net income
+- Spending insights: daily average, projected spending, savings
+- Category progress bars: budgeted vs actual
+- Overspending alerts
+- Transaction list with category filtering
+- Transaction entry form: add income/expenses
+- Month selector for viewing historical spending
+- Empty states for new users
+### Credit Cards Management
+- Full CRUD for credit cards
+- Inline editing, auto-scroll, recently-edited highlight
+- Metrics dashboard: debt, credit, utilization
+- Color-coded utilization
+- Real-time sync with DynamoDB
+- Responsive design
+### Design System
+- Tailwind CSS integration
+- Light/dark theme support
+- Smooth animations
+- Consistent styling
+### Budget & Spending API
+- 4 DynamoDB tables: budgets, transaction-details, spending-analytics, budget-goals
+- TypeScript types for budget management
+- 15 REST API endpoints (CRUD for budgets, categories, transactions, analytics)
+- Multi-tenant design
+- AI integration ready
+### Data Visualization
+- D3.js integration for charts
+- Pie charts and progress bars
+- Custom animations
+- Responsive charts
+---
+## 🚧 In Progress
+- AI Chat Page: get_user_context tool working, 5 more tools to test
+- AI Budget Integration: personalized recommendations
+- Analytics Page: charts, goals, spending trends
+- Transaction editing and recurring transactions
+- CSV import and budget goals
+- Mobile app feature parity
+---
+## 🏗️ Architecture
+Monorepo structure:
+```
+tyche/
+├── packages/          # Shared libraries
+│   ├── types/        # TypeScript definitions
+│   ├── core/         # Business logic
+│   └── ai/           # Multi-model AI adapter
+├── apps/             # Frontend applications
+│   ├── web/          # React + Vite
+│   └── mobile/       # React Native + Expo
+├── services/         # Backend services
+│   └── api/          # Lambda handlers
+├── infrastructure/   # AWS CDK (IaC)
+└── docs/             # Internal documentation (excluded from public repo)
+```
+Tech Stack:
+- Frontend: React 18 + Vite | React Native + Expo
+- Backend: AWS Lambda (Node.js 20) + HTTP API V2 + DynamoDB
+- AI: Anthropic Claude, OpenAI GPT-4, Grok, DeepSeek
+- Infrastructure: AWS CDK (TypeScript)
+- Build System: npm workspaces + TypeScript + esbuild
+- Auth: AWS Cognito
+- Database: 7 core tables, 4 budget tables
+---
+## 🚀 Quick Start
+### Prerequisites
+- Node.js 20+ and npm 9+
+- AWS CLI configured
+- AI API key (Anthropic/OpenAI/xAI/DeepSeek)
+### Installation
+```bash
+git clone https://github.com/adonisja/tyche-finance.git
+cd tyche-finance
+npm install
+npm run build
+```
+### Development
+```bash
+cd apps/web
+npm run dev
+# Open http://localhost:5173
+
+cd apps/mobile
+npm start
+# Scan QR code with Expo Go
+```
+### Deployment
+```bash
+# Set API keys (not tracked in git)
+export OPENAI_API_KEY=sk-proj-your-key-here
+export ANTHROPIC_API_KEY=sk-ant-your-key-here
+cd infrastructure
+npx cdk deploy --profile your-aws-profile
+```
+## 🧪 Testing
+```bash
+npm test
+cd packages/core
+npm test
+cd apps/web
+npm run test:e2e
+```
+## 🔐 Security & Multi-Tenancy
+- Role-based access control (User, Dev, Admin)
+- Row-level security with tenant/user partitioning
+- Audit logging for admin actions
+## 🤝 Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Commit changes
+4. Push to branch
+5. Open a Pull Request
+---
+## 📄 License
+MIT License - see LICENSE file for details
+---
+**Built with ❤️ for better financial health**
+# Tyche Finance
 
 > AI-powered personal finance application to help users manage budgets and optimize credit card debt payoff strategies.
 
