@@ -24,3 +24,4 @@ pnpm-debug.log*
 .cdk.staging
 cdk.out
 infrastructure/outputs.json
+docs/
