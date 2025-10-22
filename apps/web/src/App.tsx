@@ -15,6 +15,7 @@ import { CardsPage } from './pages/CardsPage';
 import { ChatPage } from './pages/ChatPage';
 import { BudgetSetupPage } from './pages/BudgetSetupPage';
 import { SpendingDashboard } from './pages/SpendingDashboard';
+import AnalyticsPage from './pages/AnalyticsPage';
 
 // Protected Route Component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -114,14 +115,12 @@ function App() {
           } 
         />
 
+        {/* Analytics Page */}
         <Route 
           path="/analytics" 
           element={
             <ProtectedRoute>
-              <div style={{ padding: '2rem' }}>
-                <h1>Analytics Page</h1>
-                <p>Coming soon...</p>
-              </div>
+              <AnalyticsPage />
             </ProtectedRoute>
           } 
         />

@@ -11,6 +11,7 @@
  */
 
 import { useState } from 'react';
+import path from 'path';
 import { useAuth } from '../hooks/useAuth';
 import { useCreditCards } from '../hooks/useCreditCards';
 import { Link, useLocation } from 'react-router-dom';
@@ -28,6 +29,22 @@ interface CardFormData {
   interestRate: string;  // Changed to string for percentage input
   minimumPayment: string;  // Changed to string to handle input better
   dueDate: string;  // Day of month (1-28) when payment is due
+}
+
+// Utility: Map network name to SVG filename in /assets/payment-icons
+function getNetworkLogo(network: string): string {
+  const normalized = network.trim().toLowerCase();
+  if (normalized.includes('visa')) return '/assets/payment-icons/visa.svg';
+  if (normalized.includes('mastercard')) return '/assets/payment-icons/mastercard.svg';
+  if (normalized.includes('amex') || normalized.includes('american express')) return '/assets/payment-icons/amex.svg';
+  if (normalized.includes('discover')) return '/assets/payment-icons/discover.svg';
+  if (normalized.includes('jcb')) return '/assets/payment-icons/jcb.svg';
+  if (normalized.includes('diners')) return '/assets/payment-icons/diners.svg';
+  if (normalized.includes('unionpay')) return '/assets/payment-icons/unionpay.svg';
+  if (normalized.includes('elo')) return '/assets/payment-icons/elo.svg';
+  if (normalized.includes('hipercard')) return '/assets/payment-icons/hipercard.svg';
+  if (normalized.includes('paypal')) return '/assets/payment-icons/paypal.svg';
+  return '/assets/payment-icons/default.svg';
 }
 
 const initialFormData: CardFormData = {
@@ -504,8 +521,12 @@ export function CardsPage() {
                   <div className="credit-card editing-top">
                     <div className="card-header">
                       <div className="card-title">
-                        <h4>
-                          <span className="card-icon">💳</span>
+                        <h4 style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                          <img
+                            src={getNetworkLogo(card.network)}
+                            alt={card.network + ' logo'}
+                            style={{ width: 32, height: 20, objectFit: 'contain', verticalAlign: 'middle' }}
+                          />
                           {card.name}
                         </h4>
                         <span className="card-network">{card.network} ****{card.lastFourDigits}</span>
@@ -691,29 +712,31 @@ export function CardsPage() {
                     {/* Normal card view */}
                     <div className="card-details">
                             {/* NEW: Consolidated Key Metrics Grid */}
-                            <div className="key-metrics-grid">
-                                <div className="metric-item">
-                                    <span className="metric-label">Balance</span>
-                                    <span className="metric-value-large">{formatCurrency(card.balance)}</span>
-                                </div>
-                                <div className="metric-item">
-                                    <span className="metric-label">Credit Limit</span>
-                                    <span className="metric-value-large">{formatCurrency(card.limit)}</span>
-                                </div>
-                                <div className="metric-item">
-                                    <span className="metric-label">APR</span>
-                                    <span className="metric-value-large">{formatPercent(card.apr)}</span>
-                                </div>
-                            </div>
-                            
-                            {/* Remaining Details (Min Payment and Due Date) */}
-                            <div className="detail-row">
-                                <span className="label">Min Payment:</span>
-                                <span className="value">{formatCurrency(card.minPayment)}</span>
-                            </div>
-                            <div className="detail-row">
-                                <span className="label">Due Date:</span>
-                                <span className="value">Day {card.dueDayOfMonth}</span>
+              <div className="key-metrics-grid">
+                <div className="metric-item">
+                  <span className="metric-label">Balance</span>
+                  <span className="metric-value-large">{formatCurrency(card.balance)}</span>
+                </div>
+                <div className="metric-item">
+                  <span className="metric-label">Credit Limit</span>
+                  <span className="metric-value-large">{formatCurrency(card.limit)}</span>
+                </div>
+                <div className="metric-item">
+                  <span className="metric-label">APR</span>
+                  <span className="metric-value-large">{formatPercent(card.apr)}</span>
+                </div>
+              </div>
+
+              {/* Min Payment and Due Date on their own row */}
+                            <div className="detail-row min-due-row">
+                              <div className="min-due-metric">
+                                <span className="metric-label">Min Payment</span>
+                                <span className="metric-value-large">{formatCurrency(card.minPayment)}</span>
+                              </div>
+                              <div className="min-due-metric">
+                                <span className="metric-label">Due Date</span>
+                                <span className="metric-value-large">Day {card.dueDayOfMonth}</span>
+                              </div>
                             </div>
                         </div>
 

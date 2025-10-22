@@ -18,17 +18,20 @@
 import { useState, useEffect, useCallback } from 'react';
 import { apiClient } from '../lib/api-client';
 
+// Matches backend analytics response structure
 export interface ProgressData {
-  userId: string;
-  totalDebt: number;
-  totalMinimumPayment: number;
-  totalCreditLimit: number;
-  averageInterestRate: number;
-  totalAvailableCredit: number;
-  creditUtilization: number;
-  monthlyInterestCost: number;
-  projectedPayoffMonths: number;
-  updatedAt: string;
+  summary?: {
+    totalSnapshots?: number;
+    firstSnapshotDate?: string;
+    latestSnapshotDate?: string;
+    activeGoals?: number;
+    completedGoals?: number;
+  };
+  trends?: any; // Replace with a more specific type if available
+  goals?: any[]; // Replace with a more specific type if available
+  milestones?: string[];
+  projections?: any; // Replace with a more specific type if available
+  agentkit?: string;
 }
 
 export interface Goal {
@@ -76,8 +79,9 @@ export function useAnalytics(): UseAnalyticsReturn {
 
   const fetchProgress = useCallback(async () => {
     try {
-      const data = await apiClient.get<ProgressData>('/v1/analytics/progress');
-      setProgress(data);
+      const response = await apiClient.get<any>('/v1/analytics/progress');
+      // Unwrap 'data' property if present (API returns { success, data })
+      setProgress(response.data || response);
     } catch (err: any) {
       console.error('Error fetching progress:', err);
       throw err;

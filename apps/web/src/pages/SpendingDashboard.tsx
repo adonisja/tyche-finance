@@ -327,9 +327,11 @@ export function SpendingDashboard() {
             <h1>📊 Spending Dashboard</h1>
             <p>Track your actual spending vs budget</p>
             <div className="current-month-display">
-              {new Date(currentMonth + '-01').toLocaleDateString('en-US', { 
-                month: 'long', 
-                year: 'numeric' 
+              {new Date().toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
               })}
             </div>
           </div>

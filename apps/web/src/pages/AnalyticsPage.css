@@ -1,0 +1,44 @@
+.analytics-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+.analytics-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.btn-refresh-analytics {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background: #6d28d9;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-refresh-analytics:disabled {
+  background: #a78bfa;
+  cursor: not-allowed;
+}
+.analytics-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.analytics-section {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(80, 0, 120, 0.07);
+  padding: 1.5rem;
+}
+.analytics-error {
+  color: #b91c1c;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}

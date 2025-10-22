@@ -306,6 +306,10 @@ export function DashboardPage() {
                           <span className="stat-label">APR:</span>
                           <span className="stat-value">{formatPercent(card.apr * 100)}</span>
                         </div>
+                        <div className="stat">
+                          <span className="stat-label">Min Payment:</span>
+                          <span className="stat-value">{formatCurrency(card.minPayment)}</span>
+                        </div>
                       </div>
                       <div className="utilization-bar">
                         <div

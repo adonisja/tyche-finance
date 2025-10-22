@@ -18,12 +18,16 @@ import {
   generateId,
   timestamp 
 } from '../utils/db';
+
 import type { 
   FinancialHealthSnapshot, 
   FinancialGoal, 
   UserBehaviorAnalytics,
   CreditCardAccount 
 } from '@tyche/types';
+
+// --- AgentKit Integration ---
+import { createAgent } from '@tyche/ai';
 
 const USERS_TABLE = process.env.USERS_TABLE || 'tyche-users';
 const CARDS_TABLE = process.env.CREDIT_CARDS_TABLE || 'tyche-credit-cards';
@@ -470,6 +474,12 @@ export async function updateFinancialGoal(
  * 
  * Shows debt reduction over time, goal progress, and improvement trends.
  */
+/**
+ * AgentKit Integration: getProgressReport now invokes AgentKit analytics tools for advanced computation.
+ * - Loads user data as before
+ * - Invokes AgentKit (OpenAI) for trend/insight generation
+ * - Returns both legacy and AgentKit-powered analytics
+ */
 export async function getProgressReport(
   event: APIGatewayProxyEventV2,
   userId?: string
@@ -503,7 +513,21 @@ export async function getProgressReport(
       a.timestamp.localeCompare(b.timestamp)
     );
 
-    // Calculate trends
+
+    // --- AgentKit Analytics ---
+    const agent = createAgent({ userId: targetUserId });
+    // Compose a natural language prompt for analytics
+    const agentPrompt: import('@tyche/ai').ChatMessage[] = [
+      { role: 'system', content: 'You are a financial analytics agent. Analyze the user\'s debt, goals, and trends.' },
+      { role: 'user', content: `Here are the user\'s financial snapshots: ${JSON.stringify(sortedSnapshots)}.\nHere are the user\'s goals: ${JSON.stringify(goals)}.\nGenerate a summary of trends, risks, and actionable recommendations.` }
+    ];
+    let agentkitResult = null;
+    try {
+      agentkitResult = await agent.chat(agentPrompt);
+    } catch (err) {
+      console.error('[AgentKit] Analytics agent error:', err);
+    }
+
     const report = {
       summary: {
         totalSnapshots: sortedSnapshots.length,
@@ -515,7 +539,8 @@ export async function getProgressReport(
       trends: calculateTrends(sortedSnapshots),
       goals: goals || [],
       milestones: calculateMilestones(sortedSnapshots),
-      projections: calculateProjections(sortedSnapshots)
+      projections: calculateProjections(sortedSnapshots),
+      agentkit: agentkitResult // New: AgentKit-powered analytics summary
     };
 
     await auditLog({
@@ -540,6 +565,12 @@ export async function getProgressReport(
  * 
  * Admin/Dev only - for analyzing user patterns and strategy effectiveness
  */
+/**
+ * AgentKit Integration: getAnalyticsInsights now invokes AgentKit for cohort/strategy analysis.
+ * - Loads user and snapshot data
+ * - Invokes AgentKit for advanced insights
+ * - Returns both legacy and AgentKit-powered insights
+ */
 export async function getAnalyticsInsights(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
@@ -560,7 +591,21 @@ export async function getAnalyticsInsights(
       context!.tenantId
     );
 
-    // Aggregate metrics across all users
+
+    // --- AgentKit Analytics ---
+    const agent = createAgent({ userId: context!.userId });
+    // Compose a prompt for cohort/strategy analysis
+    const agentPrompt: import('@tyche/ai').ChatMessage[] = [
+      { role: 'system', content: 'You are a financial analytics agent. Analyze user cohort, strategy effectiveness, and engagement.' },
+      { role: 'user', content: `Here are all users: ${JSON.stringify(users)}.\nGenerate insights on strategy effectiveness, engagement, and success factors.` }
+    ];
+    let agentkitResult = null;
+    try {
+      agentkitResult = await agent.chat(agentPrompt);
+    } catch (err) {
+      console.error('[AgentKit] Analytics agent error:', err);
+    }
+
     const insights = {
       userMetrics: {
         totalUsers: users.length,
@@ -568,17 +613,15 @@ export async function getAnalyticsInsights(
         avgTenureMonths: calculateAvgTenure(users)
       },
       strategyEffectiveness: {
-        // TODO: Query snapshots and calculate which strategies work best
-        note: 'Implement by analyzing snapshots grouped by strategy'
+        note: 'See agentkit for advanced analysis'
       },
       engagementPatterns: {
-        // TODO: Query analytics table for engagement metrics
-        note: 'Track feature usage, session frequency, retention'
+        note: 'See agentkit for advanced analysis'
       },
       successFactors: {
-        // TODO: Correlate high-performing users with their behaviors
-        note: 'Identify common traits of users who succeed'
-      }
+        note: 'See agentkit for advanced analysis'
+      },
+      agentkit: agentkitResult // New: AgentKit-powered insights
     };
 
     await auditLog({

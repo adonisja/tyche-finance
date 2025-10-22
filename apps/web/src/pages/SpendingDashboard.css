@@ -43,7 +43,7 @@
 }
 
 .spending-dashboard-page .nav-links a.active {
-  color: #667eea;
+  color: #fff;
 }
 
 .spending-dashboard-page .nav-links a.active::after {
